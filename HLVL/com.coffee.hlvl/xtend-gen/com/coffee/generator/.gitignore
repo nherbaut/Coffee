@@ -3,3 +3,11 @@
 /.Dialect.xtendbin
 /.HlvlGenerator.xtendbin
 /.IGenerator.xtendbin
+/.AbstractGenerator.java._trace
+/.HlvlGenerator.java._trace
+/.IGenerator.java._trace
+/.TransformationRules.java._trace
+/AbstractGenerator.java
+/HlvlGenerator.java
+/IGenerator.java
+/TransformationRules.java

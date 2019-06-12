@@ -2,47 +2,47 @@ package com.coffee.generator.minizinc;
 
 @SuppressWarnings("all")
 public interface IConstants {
-  public final static String SEMICOLON = ";";
+  public static final String SEMICOLON = ";";
   
-  public final static String COLON = ":";
+  public static final String COLON = ":";
   
-  public final static String OPEN_CALL = "(";
+  public static final String OPEN_CALL = "(";
   
-  public final static String CLOSE_CALL = ")";
+  public static final String CLOSE_CALL = ")";
   
-  public final static String VAR_DEF = "var";
+  public static final String VAR_DEF = "var";
   
-  public final static String BOOL_DOMAIN = "bool";
+  public static final String BOOL_DOMAIN = "bool";
   
-  public final static String ASSIGN = "=";
+  public static final String ASSIGN = "=";
   
-  public final static String CONS_DEF = "constraint";
+  public static final String CONS_DEF = "constraint";
   
-  public final static String EQUIV = "=";
+  public static final String EQUIV = "=";
   
-  public final static String NEQUIV = "!=";
+  public static final String NEQUIV = "!=";
   
-  public final static String LT = "<";
+  public static final String LT = "<";
   
-  public final static String GT = ">";
+  public static final String GT = ">";
   
-  public final static String LEQ = "<=";
+  public static final String LEQ = "<=";
   
-  public final static String GEQ = ">=";
+  public static final String GEQ = ">=";
   
-  public final static String IFF = "<->";
+  public static final String IFF = "<->";
   
-  public final static String IMPLIES_LR = "->";
+  public static final String IMPLIES_LR = "->";
   
-  public final static String IMPLIES_R_ = "<-";
+  public static final String IMPLIES_R_ = "<-";
   
-  public final static String OR = "\\/";
+  public static final String OR = "\\/";
   
-  public final static String AND = "/\\";
+  public static final String AND = "/\\";
   
-  public final static String NOT = "not";
+  public static final String NOT = "not";
   
-  public final static String TRUE_ATOM = "true";
+  public static final String TRUE_ATOM = "true";
   
-  public final static String FALSE_ATOM = "false";
+  public static final String FALSE_ATOM = "false";
 }
