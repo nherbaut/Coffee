@@ -2,15 +2,16 @@ package webmapi.rest;
 
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+
+import com.coffee.hlvl.*;
+import com.coffee.hlvl.service.*;
+
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 
 
 import webmapi.util.ResourceSaver;
-
-import hlvl.*;
-import hlvl.service.*;
 
 @Path("")
 public class WebApiService{

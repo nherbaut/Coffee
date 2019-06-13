@@ -31,9 +31,9 @@ public class Main {
 		// in com.mirlitone package
 
 		final ResourceConfig rc = new ResourceConfig()
-				.packages("com.coffee.web")
-				.packages("hlvl")
-				.packages("webmapi")
+				.packages("com.coffee")
+				
+				
 				.register(JacksonJaxbXMLProvider.class)
 				.register(DeclarativeLinkingFeature.class);
 

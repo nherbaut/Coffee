@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 
-import hlvl.impl.ModelImpl;
+import com.coffee.hlvl.impl.ModelImpl;
 
 @XmlRootElement(name ="list")
 @XmlSeeAlso(ModelImpl.class)

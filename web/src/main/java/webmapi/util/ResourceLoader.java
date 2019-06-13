@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.jboss.vfs.VirtualFile;
 
-import hlvl.HlvlPackage;
+import com.coffee.hlvl.HlvlPackage;
 
 @Startup
 @Singleton

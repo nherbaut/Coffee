@@ -10,7 +10,7 @@
       <!-- @generated Hlvl -->
       <package
             uri="http://www.coffee.com/Hlvl"
-            class="hlvl.HlvlPackage"/>
+            class="com.coffee.hlvl.HlvlPackage"/>
    </extension>
 
 </plugin>

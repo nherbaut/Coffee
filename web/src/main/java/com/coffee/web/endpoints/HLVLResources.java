@@ -1,6 +1,7 @@
 package com.coffee.web.endpoints;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -9,6 +10,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.URI;
@@ -18,13 +21,16 @@ import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.resource.XtextResourceSet;
 
 import com.coffee.HlvlStandaloneSetup;
-
-import hlvl.Model;
-import hlvl.impl.HlvlFactoryImpl;
-import hlvl.impl.HlvlPackageImpl;
-import hlvl.impl.ModelImpl;
-import hlvl.proxy.ModelAdapter;
-import hlvl.util.HlvlAdapterFactory;
+import com.coffee.hlvl.Model;
+import com.coffee.hlvl.Operation;
+import com.coffee.hlvl.Operations;
+import com.coffee.hlvl.impl.HlvlFactoryImpl;
+import com.coffee.hlvl.impl.HlvlPackageImpl;
+import com.coffee.hlvl.impl.ModelImpl;
+import com.coffee.hlvl.proxy.ModelAdapter;
+import com.coffee.hlvl.proxy.ModelProxy;
+import com.coffee.hlvl.proxy.OperationsAdapter;
+import com.coffee.hlvl.util.HlvlAdapterFactory;
 
 @Path("hlvl")
 public class HLVLResources {
@@ -35,6 +41,11 @@ public class HLVLResources {
 
 		Model m = HlvlFactoryImpl.init().createModel();
 		m.setName("momo");
+		Operations ops = HlvlFactoryImpl.init().createOperations();
+		Operation op = HlvlFactoryImpl.init().createOperation();
+		
+		ops.getOp().add(op);
+		m.setOperations(ops);
 		return m;
 
 	}
@@ -42,9 +53,9 @@ public class HLVLResources {
 	@Path("dummy")
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public Model getDummyHlvl() throws IOException {
+	public Response getDummyHlvl() throws IOException {
 
-		new org.eclipse.emf.mwe.utils.StandaloneSetup().setPlatformUri("../");
+		//new org.eclipse.emf.mwe.utils.StandaloneSetup().setPlatformUri("../");
 		com.google.inject.Injector injector = new HlvlStandaloneSetup().createInjectorAndDoEMFRegistration();
 		XtextResourceSet resourceSet = injector.getInstance(XtextResourceSet.class);
 		resourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
@@ -52,7 +63,30 @@ public class HLVLResources {
 		InputStream in = new ByteArrayInputStream(example.getBytes());
 		resource.load(in, resourceSet.getLoadOptions());
 		Model model = (Model) resource.getContents().get(0);
-		return model;
+		
+		
+		try {
+			
+		JAXBContext contextObj = JAXBContext.newInstance(Model.class);
+		
+		  
+	    Marshaller marshallerObj = contextObj.createMarshaller();
+	    marshallerObj.setAdapter(new ModelAdapter());
+	    marshallerObj.setAdapter(new OperationsAdapter());
+	    
+	    
+	    marshallerObj.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+	    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+	    marshallerObj.marshal(model, bos);
+	    
+	    System.out.println(bos.toString());
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	    
+	    
+		return Response.accepted(model).build();
 
 	}
 

@@ -1,28 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
+		<relativePath>../pom.xml</relativePath>
 		<groupId>com.coffee</groupId>
 		<artifactId>coffee-parent</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
-
-	<artifactId>hlvl-parent</artifactId>
 	<groupId>com.coffee.hlvl</groupId>
-	
+	<artifactId>hlvl-parent</artifactId>
+
+
 	<packaging>pom</packaging>
 
 	<modules>
 		<module>com.coffee.hlvl</module>
-<!-- 		<module>com.coffee.hlvl.ide</module> -->
-<!-- 		<module>com.coffee.hlvl.ui</module> -->
-<!-- 		<module>com.coffee.hlvl.tests</module> -->
-<!-- 		<module>com.coffee.hlvl.sdk</module> -->
-<!-- 		<module>com.coffee.hlvl.updatesite</module> -->
+		<!-- <module>com.coffee.hlvl.ide</module> -->
+		<!-- <module>com.coffee.hlvl.ui</module> -->
+		<!-- <module>com.coffee.hlvl.tests</module> -->
+		<!-- <module>com.coffee.hlvl.sdk</module> -->
+		<!-- <module>com.coffee.hlvl.updatesite</module> -->
 	</modules>
-	
+
 	<properties>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
@@ -44,13 +46,13 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 			<url>https://download.eclipse.org/modeling/tmf/xtext/updates/releases/${xtext.version}/</url>
 		</repository>
 	</repositories>
-	
+
 	<build>
-		
+
 		<pluginManagement>
-			
+
 			<plugins>
-				
+
 				<!-- xtend-maven-plugin is in pluginManagement instead of in plugins 
 					so that it doesn't run before the exec-maven-plugin's *.mwe2 gen; this way 
 					we can list it after. -->
@@ -72,7 +74,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 						<outputDirectory>xtend-gen</outputDirectory>
 					</configuration>
 				</plugin>
-			
+
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-clean-plugin</artifactId>
@@ -93,22 +95,22 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 						</execution>
 					</executions>
 				</plugin>
-				
+
 			</plugins>
-			
+
 		</pluginManagement>
 
 		<plugins>
-			
+
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-maven-plugin</artifactId>
 				<version>${tycho-version}</version>
 				<extensions>true</extensions>
 			</plugin>
-			
+
 		</plugins>
-	
+
 	</build>
-	
+
 </project>

@@ -4,46 +4,33 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.emf-rest</groupId>
+
+
+	<parent>
+		<artifactId>coffee-parent</artifactId>
+		<groupId>com.coffee</groupId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+
+
+
+
 	<artifactId>web</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+
 	<packaging>war</packaging>
-	<name>jboss.test</name>
-	<description>EMF-REST generated API</description>
+	<name>web</name>
 
-	<url>http://emf-rest.com</url>
-	<repositories>
-		<repository>
-			<id>lgp-runtime</id>
-			<url>http://repo.openehealth.org/maven2/releases/releases/</url>
-		</repository>
 
-		<repository>
-			<id>prime-repo</id>
-			<name>PrimeFaces Maven Repository</name>
-			<url>http://repository.primefaces.org</url>
-			<layout>default</layout>
-		</repository>
-	</repositories>
+
 	<properties>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-
 		<version.jboss.maven.plugin>7.4.Final</version.jboss.maven.plugin>
-
-
 		<version.jboss.bom.eap>6.3.0.GA</version.jboss.bom.eap>
-
-
 		<version.surefire.plugin>2.10</version.surefire.plugin>
 		<version.war.plugin>2.1.1</version.war.plugin>
-
-
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<maven.compiler.source>1.8</maven.compiler.source>
-
-
 		<jersey.version>2.28</jersey.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<xtext.version>2.17.1</xtext.version>
@@ -76,6 +63,11 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+			<dependency>
+				<groupId>org.eclipse.platform</groupId>
+				<artifactId>org.eclipse.osgi</artifactId>
+				<version>3.13.200</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -86,20 +78,20 @@
 			<groupId>com.coffee.hlvl</groupId>
 			<artifactId>com.coffee.hlvl</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
-			
+
 		</dependency>
 
 		<dependency>
 			<groupId>javax.enterprise</groupId>
 			<artifactId>cdi-api</artifactId>
-			
+			<scope>provided</scope>
 		</dependency>
 
 
 		<dependency>
 			<groupId>org.jboss.spec.javax.annotation</groupId>
 			<artifactId>jboss-annotations-api_1.1_spec</artifactId>
-			
+			<scope>provided</scope>
 		</dependency>
 
 
@@ -108,20 +100,20 @@
 		<dependency>
 			<groupId>org.hibernate.javax.persistence</groupId>
 			<artifactId>hibernate-jpa-2.0-api</artifactId>
-			
+			<scope>provided</scope>
 		</dependency>
 
 
 		<dependency>
 			<groupId>org.jboss.spec.javax.ejb</groupId>
 			<artifactId>jboss-ejb-api_3.1_spec</artifactId>
-			
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			
+			<scope>provided</scope>
 			<exclusions>
 				<exclusion>
 					<groupId>org.slf4j</groupId>
@@ -134,41 +126,40 @@
 		<dependency>
 			<groupId>org.jboss.spec.javax.faces</groupId>
 			<artifactId>jboss-jsf-api_2.1_spec</artifactId>
-			
+
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.primefaces</groupId>
 			<artifactId>primefaces</artifactId>
 			<version>5.1</version>
+			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.primefaces.themes</groupId>
-			<artifactId>all-themes</artifactId>
-			<version>1.0.10</version>
-		</dependency>
+
 		<dependency>
 			<groupId>org.primefaces.extensions</groupId>
 			<artifactId>primefaces-extensions</artifactId>
 			<version>3.0.0</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-jpamodelgen</artifactId>
-			
+			<scope>provided</scope>
 		</dependency>
 
 
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator-annotation-processor</artifactId>
-			
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.jboss.resteasy</groupId>
 			<artifactId>resteasy-jaxrs</artifactId>
 			<version>3.0.5.Final</version>
-			
+			<scope>provided</scope>
 			<!-- filter out unwanted jars -->
 			<exclusions>
 				<exclusion>
@@ -187,12 +178,17 @@
 					<groupId>com.sun.xml.bind</groupId>
 					<artifactId>jaxb-impl</artifactId>
 				</exclusion>
+				<exclusion>
+					<groupId>javassist</groupId>
+					<artifactId>javassist</artifactId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.codehaus.jettison</groupId>
 			<artifactId>jettison</artifactId>
 			<version>1.3.5</version>
+			<scope>provided</scope>
 			<exclusions>
 				<exclusion>
 					<groupId>javax.xml.bind</groupId>
@@ -212,12 +208,14 @@
 			<groupId>org.jboss</groupId>
 			<artifactId>jboss-vfs</artifactId>
 			<version>3.0.1.GA</version> <!-- jdk1.6+ -->
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.jboss.resteasy</groupId>
 			<artifactId>resteasy-jettison-provider</artifactId>
 			<version>3.0.5.Final</version>
-			
+			<scope>provided</scope>
+
 			<exclusions>
 				<exclusion>
 					<groupId>javax.xml.bind</groupId>
@@ -310,13 +308,7 @@
 			<scope>test</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>my.mavenized.herolanguage</groupId>
-			<artifactId>my.mavenized.herolanguage</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
-
-		</dependency>
-
+		
 		<dependency>
 			<groupId>org.glassfish.jersey.containers</groupId>
 			<artifactId>jersey-container-grizzly2-http</artifactId>
@@ -330,7 +322,6 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.9</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -394,11 +385,7 @@
 
 
 		<!-- SALUT -->
-		<dependency>
-			<groupId>org.eclipse.emf</groupId>
-			<artifactId>org.eclipse.emf.mwe2.launch</artifactId>
-			<version>2.10.0</version>
-		</dependency>
+		
 		<dependency>
 			<groupId>org.eclipse.xtext</groupId>
 			<artifactId>org.eclipse.xtext.common.types</artifactId>
@@ -414,33 +401,10 @@
 			<artifactId>org.eclipse.xtext.xbase</artifactId>
 			<version>${xtext.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.eclipse.xtext</groupId>
-			<artifactId>xtext-antlr-generator</artifactId>
-			<version>[2.1.1, 3)</version>
-		</dependency>
 
 	</dependencies>
 
-	<build>
-
-		<finalName>${project.artifactId}</finalName>
-		<plugins>
-			<plugin>
-				<artifactId>maven-war-plugin</artifactId>
-				<version>${version.war.plugin}</version>
-				<configuration>
-					<failOnMissingWebXml>false</failOnMissingWebXml>
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<groupId>org.jboss.as.plugins</groupId>
-				<artifactId>jboss-as-maven-plugin</artifactId>
-				<version>${version.jboss.maven.plugin}</version>
-			</plugin>
-		</plugins>
-	</build>
+	
 
 	<profiles>
 		<profile>
