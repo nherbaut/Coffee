@@ -14,11 +14,24 @@
     <module>executor</module>
     <module>web</module>
     <module>HLVL</module>
-  </modules>
+    
+    </modules>
 
     <build>
         <pluginManagement>
-            <plugins>
+		<plugins>
+			<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-jar-plugin</artifactId>
+    <configuration>
+        <archive>
+            <manifest>
+                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+            </manifest>
+        </archive>
+    </configuration>
+</plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>

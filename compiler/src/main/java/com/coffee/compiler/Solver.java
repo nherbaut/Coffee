@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.json.JsonObject;
 
+
 public class Solver {
 	private String solverID;
 	private String command;

@@ -1,0 +1,42 @@
+model EShop_Paper
+elements:
+	boolean connection
+	boolean secureConnection
+	boolean insecureConnection
+	symbolic customerType variants: ['sporadic' , 'regular'] 
+						 comment: {"What is the customer type?"}
+	boolean customerProfile
+	boolean payment
+	boolean payPal
+	boolean SMS
+	boolean card
+	boolean creditCard
+	boolean giftCard
+	boolean debitCard
+	instantiable [1,5] boolean  appServer
+	instantiable [2,10] boolean serverMachines  
+	att integer confidentiality variants: 1..5
+	att integer confidentialityBounded is 2
+	att integer certificateType variants: 1..5
+	boolean productType
+relations:
+	com1: common(customerType, payment)
+	//mutex
+	m1: mutex(creditCard, insecureConnection) 
+	m2: mutex(customerType='sporadic',[giftCard,creditCard])
+	//implications 
+	imp1:implies(payPal, secureConnection)
+	imp2: implies(customerType='regular', [secure,customerProfile])
+	imp3: [2, 4] appServer implies [1, 5] serverMachines
+	//decompositions
+	dc1: decomposition(card, [giftCard, debitCard])<0>
+	dc2: decomposition(card, [creditCard])<1>
+	att1:decomposition(payPal,[confidentiality,certificateType])<1>
+	att3:decomposition(card,[confidentiality,certificateType])<1>
+	g1: group(payment, [payPal, card])[1,*]
+	g2: group(connection, [secureConnection, insecureConnection])[1,1]
+	//visibility
+	v1: visibility(productType = 'services', [VR1, VR2])
+	// expression
+	exp1: expression(3 <= card.confidentiality AND 
+                             card.confidentiality <= 5)

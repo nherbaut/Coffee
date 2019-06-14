@@ -1,0 +1,150 @@
+
+<?xml version="1.0" encoding="ASCII"?>
+<hlvl:Model xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:hlvl="http://www.coffee.com/Hlvl" name="EShop_Paper">
+  <elements dataType="boolean" name="connection">
+    <declaration xsi:type="hlvl:ConstantDecl"/>
+  </elements>
+  <elements dataType="boolean" name="secureConnection">
+    <declaration xsi:type="hlvl:ConstantDecl"/>
+  </elements>
+  <elements dataType="boolean" name="insecureConnection">
+    <declaration xsi:type="hlvl:ConstantDecl"/>
+  </elements>
+  <elements dataType="symbolic" name="customerType" comment="What is the customer type?">
+    <declaration xsi:type="hlvl:VariableDecl">
+      <variants xsi:type="hlvl:Enumeration">
+        <list>
+          <values xsi:type="hlvl:Symbol" value="sporadic"/>
+          <values xsi:type="hlvl:Symbol" value="regular"/>
+        </list>
+      </variants>
+    </declaration>
+  </elements>
+  <elements dataType="boolean" name="customerProfile">
+    <declaration xsi:type="hlvl:ConstantDecl"/>
+  </elements>
+  <elements dataType="boolean" name="payment">
+    <declaration xsi:type="hlvl:ConstantDecl"/>
+  </elements>
+  <elements dataType="boolean" name="payPal">
+    <declaration xsi:type="hlvl:ConstantDecl"/>
+  </elements>
+  <elements dataType="boolean" name="SMS">
+    <declaration xsi:type="hlvl:ConstantDecl"/>
+  </elements>
+  <elements dataType="boolean" name="card">
+    <declaration xsi:type="hlvl:ConstantDecl"/>
+  </elements>
+  <elements dataType="boolean" name="creditCard">
+    <declaration xsi:type="hlvl:ConstantDecl"/>
+  </elements>
+  <elements dataType="boolean" name="giftCard">
+    <declaration xsi:type="hlvl:ConstantDecl"/>
+  </elements>
+  <elements dataType="boolean" name="debitCard">
+    <declaration xsi:type="hlvl:ConstantDecl"/>
+  </elements>
+  <elements inst="instantiable" name="appServer">
+    <declaration xsi:type="hlvl:ConstantDecl"/>
+  </elements>
+  <elements inst="instantiable" name="serverMachines">
+    <declaration xsi:type="hlvl:ConstantDecl"/>
+  </elements>
+  <elements att="att" dataType="integer" name="confidentiality">
+    <declaration xsi:type="hlvl:VariableDecl">
+      <variants xsi:type="hlvl:Interval" start="1" end="5"/>
+    </declaration>
+  </elements>
+  <elements att="att" dataType="integer" name="confidentialityBounded">
+    <declaration xsi:type="hlvl:ConstantDecl">
+      <value xsi:type="hlvl:Number" value="2"/>
+    </declaration>
+  </elements>
+  <elements att="att" dataType="integer" name="certificateType">
+    <declaration xsi:type="hlvl:VariableDecl">
+      <variants xsi:type="hlvl:Interval" start="1" end="5"/>
+    </declaration>
+  </elements>
+  <elements dataType="boolean" name="productType">
+    <declaration xsi:type="hlvl:ConstantDecl"/>
+  </elements>
+  <relations name="com1"/>
+  <relations name="common"/>
+  <relations name="customerType"/>
+  <relations name="payment"/>
+  <relations name="m1">
+    <exp xsi:type="hlvl:Pair" operator="mutex" var1="//@elements.9" var2="//@elements.2"/>
+  </relations>
+  <relations name="m2"/>
+  <relations name="customerType"/>
+  <relations name="giftCard"/>
+  <relations name="creditCard"/>
+  <relations name="imp1">
+    <exp xsi:type="hlvl:Pair" operator="implies" var1="//@elements.6" var2="//@elements.1"/>
+  </relations>
+  <relations name="imp2"/>
+  <relations name="customerType"/>
+  <relations name="secure"/>
+  <relations name="customerProfile"/>
+  <relations name="imp3">
+    <exp xsi:type="hlvl:QImplies" mina="2" maxa="4" var1="//@elements.12" minb="1" maxb="5" var2="//@elements.13"/>
+  </relations>
+  <relations name="dc1">
+    <exp xsi:type="hlvl:Decomposition" parent="//@elements.8">
+      <children values="//@elements.10 //@elements.11"/>
+    </exp>
+  </relations>
+  <relations name="dc2">
+    <exp xsi:type="hlvl:Decomposition" parent="//@elements.8" cardinality="1">
+      <children values="//@elements.9"/>
+    </exp>
+  </relations>
+  <relations name="att1">
+    <exp xsi:type="hlvl:Decomposition" parent="//@elements.6" cardinality="1">
+      <children values="//@elements.14 //@elements.16"/>
+    </exp>
+  </relations>
+  <relations name="att3">
+    <exp xsi:type="hlvl:Decomposition" parent="//@elements.8" cardinality="1">
+      <children values="//@elements.14 //@elements.16"/>
+    </exp>
+  </relations>
+  <relations name="g1">
+    <exp xsi:type="hlvl:Group" parent="//@elements.5" min="1">
+      <children values="//@elements.6 //@elements.8"/>
+      <max value="*"/>
+    </exp>
+  </relations>
+  <relations name="g2">
+    <exp xsi:type="hlvl:Group" parent="//@elements.0" min="1">
+      <children values="//@elements.1 //@elements.2"/>
+      <max value="1"/>
+    </exp>
+  </relations>
+  <relations name="v1">
+    <exp xsi:type="hlvl:Visibility">
+      <condition xsi:type="hlvl:Equality" op="=">
+        <left xsi:type="hlvl:VariableRef" variable="//@elements.17"/>
+        <right xsi:type="hlvl:StringConstant" value="services"/>
+      </condition>
+      <children>
+        <ids href="dummy:/example.hlvl#|24"/>
+        <ids href="dummy:/example.hlvl#|25"/>
+      </children>
+    </exp>
+  </relations>
+  <relations name="exp1">
+    <exp xsi:type="hlvl:Expression">
+      <exp xsi:type="hlvl:And">
+        <left xsi:type="hlvl:Comparison" op="&lt;=">
+          <left xsi:type="hlvl:IntConstant" value="3"/>
+          <right xsi:type="hlvl:AttributeRef" attribute="card.confidentiality"/>
+        </left>
+        <right xsi:type="hlvl:Comparison" op="&lt;=">
+          <left xsi:type="hlvl:AttributeRef" attribute="card.confidentiality"/>
+          <right xsi:type="hlvl:IntConstant" value="5"/>
+        </right>
+      </exp>
+    </exp>
+  </relations>
+</hlvl:Model>

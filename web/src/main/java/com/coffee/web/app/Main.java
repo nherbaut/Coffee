@@ -17,7 +17,7 @@ import com.fasterxml.jackson.jaxrs.xml.JacksonJaxbXMLProvider;
  */
 public class Main {
 	// Base URI the Grizzly HTTP server will listen on
-	public static final String BASE_URI = "http://localhost:8080/myapp/";
+	public static final String BASE_URI = "http://localhost:8080/api/";
 
 	/**
 	 * Starts Grizzly HTTP server exposing JAX-RS resources defined in this
@@ -31,9 +31,8 @@ public class Main {
 		// in com.mirlitone package
 
 		final ResourceConfig rc = new ResourceConfig()
-				.packages("com.coffee")
-				
-				
+				.packages("com.coffee.web.endpoints")
+				.register(new MyApplicationBinder())
 				.register(JacksonJaxbXMLProvider.class)
 				.register(DeclarativeLinkingFeature.class);
 
