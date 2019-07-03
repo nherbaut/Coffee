@@ -17,7 +17,7 @@ import com.fasterxml.jackson.jaxrs.xml.JacksonJaxbXMLProvider;
  */
 public class Main {
 	// Base URI the Grizzly HTTP server will listen on
-	public static final String BASE_URI = "http://localhost:8080/api/";
+	public static final String BASE_URI = "http://0.0.0.0:8080/api/";
 
 	/**
 	 * Starts Grizzly HTTP server exposing JAX-RS resources defined in this
@@ -47,8 +47,9 @@ public class Main {
 	 * 
 	 * @param args
 	 * @throws IOException
+	 * @throws InterruptedException 
 	 */
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, InterruptedException {
 		SLF4JBridgeHandler.removeHandlersForRootLogger();
 		SLF4JBridgeHandler.install();
 		final HttpServer server = startServer();
@@ -56,7 +57,11 @@ public class Main {
 				"Jersey app started with WADL available at "
 						+ "%sapplication.wadl\nHit enter to stop it...",
 				BASE_URI));
+		
+		while(true) {
 		System.in.read();
-		server.stop();
+		}
+		//server.stop();
+		//Thread.currentThread().join();
 	}
 }

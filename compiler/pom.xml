@@ -3,6 +3,14 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
+	  <repositories>
+    <repository>
+      <id>3rd party Jars</id>
+      <name>3rd Party Jars from nextnet.top</name>
+      <url>https://maven.nextnet.top</url>
+    </repository>
+    </repositories>
+
 	<parent>
 		<groupId>com.coffee</groupId>
 		<artifactId>coffee-parent</artifactId>

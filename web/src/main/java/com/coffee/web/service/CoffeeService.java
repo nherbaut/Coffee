@@ -10,5 +10,7 @@ public interface CoffeeService {
 	boolean isModelSatisfiable(Model m,String solverId);
 
 	public Integer computeAllConfigurations(Model m,String solverId);
+	
+	public String dummy(String solverName);
 
 }

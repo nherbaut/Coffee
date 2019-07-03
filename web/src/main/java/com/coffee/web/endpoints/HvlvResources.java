@@ -66,11 +66,17 @@ public class HvlvResources {
 
 	@Path("dummy")
 	@GET
-
 	@Produces(value = { MediaType.APPLICATION_JSON })
 	public Response getJSON() throws IOException {
 		String jsonStr = EMF2JSON(dummyModel);
 		return Response.accepted(jsonStr).build();
+	}
+
+	@Path("dummy")
+	@POST
+	@Produces(value = { MediaType.TEXT_PLAIN })
+	public Response useMinizinc(@QueryParam("solver_id") String solverId) throws IOException {
+		return Response.ok(service.dummy(solverId)).build();
 	}
 
 	@Path("dummy")
