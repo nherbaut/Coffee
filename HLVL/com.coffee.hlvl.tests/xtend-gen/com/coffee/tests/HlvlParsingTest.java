@@ -3,16 +3,11 @@
  */
 package com.coffee.tests;
 
-import com.coffee.hlvl.Model;
-import com.coffee.tests.HlvlInjectorProvider;
 import com.google.inject.Inject;
-import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.testing.InjectWith;
 import org.eclipse.xtext.testing.XtextRunner;
 import org.eclipse.xtext.testing.util.ParseHelper;
-import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Extension;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -22,12 +17,12 @@ import org.junit.runner.RunWith;
  * @version HLVL V4
  * November 2018
  */
-@RunWith(XtextRunner.class)
-@InjectWith(HlvlInjectorProvider.class)
+@RunWith(XtextRunner.class)/* 
+@InjectWith(/* name is null */) */
 @SuppressWarnings("all")
 public class HlvlParsingTest {
   @Inject
-  private ParseHelper<Model> parseHelper;
+  private /* ParseHelper<Model> */Object parseHelper;
   
   @Inject
   @Extension
@@ -38,20 +33,10 @@ public class HlvlParsingTest {
    */
   @Test
   public void emptyModel() {
-    try {
-      StringConcatenation _builder = new StringConcatenation();
-      _builder.append("model empty");
-      _builder.newLine();
-      _builder.append("elements:");
-      _builder.newLine();
-      _builder.append("relations:");
-      _builder.newLine();
-      final String model = _builder.toString();
-      final Model empty = this.parseHelper.parse(model);
-      Assert.assertNotNull(empty);
-      Assert.assertTrue(empty.eResource().getErrors().isEmpty());
-    } catch (Throwable _e) {
-      throw Exceptions.sneakyThrow(_e);
-    }
+    throw new Error("Unresolved compilation problems:"
+      + "\nThe field HlvlParsingTest.parseHelper refers to the missing type Model"
+      + "\neResource cannot be resolved"
+      + "\nerrors cannot be resolved"
+      + "\nisEmpty cannot be resolved");
   }
 }

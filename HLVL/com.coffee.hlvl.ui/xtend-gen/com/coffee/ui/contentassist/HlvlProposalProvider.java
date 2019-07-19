@@ -3,12 +3,10 @@
  */
 package com.coffee.ui.contentassist;
 
-import com.coffee.ui.contentassist.AbstractHlvlProposalProvider;
-
 /**
  * See https://www.eclipse.org/Xtext/documentation/304_ide_concepts.html#content-assist
  * on how to customize the content assistant.
  */
 @SuppressWarnings("all")
-public class HlvlProposalProvider extends AbstractHlvlProposalProvider {
+public class HlvlProposalProvider /* implements AbstractHlvlProposalProvider  */{
 }
