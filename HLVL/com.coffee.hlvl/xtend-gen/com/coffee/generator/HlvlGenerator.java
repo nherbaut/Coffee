@@ -5,10 +5,22 @@ package com.coffee.generator;
 
 import com.coffee.generator.Dialect;
 import com.coffee.generator.IHLVLParser;
+import com.coffee.generator.ParserFactory;
+import com.coffee.hlvl.Decomposition;
+import com.coffee.hlvl.ElmDeclaration;
+import com.coffee.hlvl.Group;
+import com.coffee.hlvl.Model;
+import com.coffee.hlvl.RelDeclaration;
+import com.coffee.hlvl.Relation;
+import com.google.common.base.Objects;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.generator.AbstractGenerator;
 import org.eclipse.xtext.generator.IFileSystemAccess2;
 import org.eclipse.xtext.generator.IGeneratorContext;
+import org.eclipse.xtext.xbase.lib.IterableExtensions;
+import org.eclipse.xtext.xbase.lib.StringExtensions;
 
 /**
  * Generates code from your model files on save.
@@ -42,14 +54,17 @@ public class HlvlGenerator extends AbstractGenerator {
   
   @Override
   public void doGenerate(final Resource resource, final IFileSystemAccess2 fsa, final IGeneratorContext context) {
-    throw new Error("Unresolved compilation problems:"
-      + "\nModel cannot be resolved to a type."
-      + "\nModel cannot be resolved to a type."
-      + "\nThe method parseModel(Model) is undefined for the type IHLVLParser"
-      + "\nThe method modelName(Model) from the type HlvlGenerator refers to the missing type Object"
-      + "\nThe method findDialect(Model) from the type HlvlGenerator refers to the missing type Model"
-      + "\n+ cannot be resolved"
-      + "\n+ cannot be resolved");
+    EObject _head = IterableExtensions.<EObject>head(resource.getContents());
+    final String modelName = this.modelName(((Model) _head));
+    EObject _head_1 = IterableExtensions.<EObject>head(resource.getContents());
+    final Model model = ((Model) _head_1);
+    final Dialect dialect = this.findDialect(model);
+    final long startTime = System.currentTimeMillis();
+    this.parser = ParserFactory.getParser(dialect, modelName);
+    fsa.generateFile((modelName + ".mzn"), this.parser.parseModel(model));
+    final long stopTime = System.currentTimeMillis();
+    final long elapsedTime = (stopTime - startTime);
+    fsa.generateFile((modelName + "_Operations.json"), this.parser.getOperations(elapsedTime));
   }
   
   /**
@@ -57,10 +72,9 @@ public class HlvlGenerator extends AbstractGenerator {
    * @param modes is of type Model
    * @returns String name with the name of the model
    */
-  public Object modelName(final /* Model */Object model) {
-    throw new Error("Unresolved compilation problems:"
-      + "\nname cannot be resolved"
-      + "\ntoFirstUpper cannot be resolved");
+  public String modelName(final Model model) {
+    String name = StringExtensions.toFirstUpper(model.getName());
+    return name;
   }
   
   /**
@@ -68,10 +82,19 @@ public class HlvlGenerator extends AbstractGenerator {
    * using the
    * @param model is an abstract representation of the model
    */
-  public Dialect findDialect(final /* Model */Object model) {
-    throw new Error("Unresolved compilation problems:"
-      + "\nThe method allElementsBoolean(Model) from the type HlvlGenerator refers to the missing type Model"
-      + "\nThe method booleanRelations(Model) from the type HlvlGenerator refers to the missing type Model");
+  public Dialect findDialect(final Model model) {
+    final boolean allElementsBooleanNotAttributes = this.allElementsBoolean(model);
+    final boolean basicRelationsNotMultiplicity = this.booleanRelations(model);
+    if ((allElementsBooleanNotAttributes && basicRelationsNotMultiplicity)) {
+      return Dialect.BASIC_BOOL;
+    } else {
+      boolean _existInstantiable = this.existInstantiable();
+      if (_existInstantiable) {
+        return Dialect.MULTIPLICITY;
+      } else {
+        return Dialect.ATTRIBUTE;
+      }
+    }
   }
   
   /**
@@ -81,19 +104,21 @@ public class HlvlGenerator extends AbstractGenerator {
    * @param model
    * @return true if all elements are booleans
    */
-  public boolean allElementsBoolean(final /* Model */Object model) {
-    throw new Error("Unresolved compilation problems:"
-      + "\nelements cannot be resolved"
-      + "\natt cannot be resolved"
-      + "\n=== cannot be resolved"
-      + "\ndataType cannot be resolved"
-      + "\n== cannot be resolved"
-      + "\n|| cannot be resolved"
-      + "\ndataType cannot be resolved"
-      + "\n== cannot be resolved"
-      + "\n|| cannot be resolved"
-      + "\natt cannot be resolved"
-      + "\n!== cannot be resolved");
+  public boolean allElementsBoolean(final Model model) {
+    boolean isBoolean = true;
+    EList<ElmDeclaration> _elements = model.getElements();
+    for (final ElmDeclaration element : _elements) {
+      {
+        String _att = element.getAtt();
+        boolean _tripleEquals = (_att == null);
+        this.attributes = _tripleEquals;
+        if (((Objects.equal(element.getDataType(), "integer") || Objects.equal(element.getDataType(), "symbolic")) || (element.getAtt() != null))) {
+          isBoolean = false;
+          return isBoolean;
+        }
+      }
+    }
+    return isBoolean;
   }
   
   /**
@@ -103,52 +128,47 @@ public class HlvlGenerator extends AbstractGenerator {
    * @param model
    * @return true if all constraints can be mapped to boolean
    */
-  public boolean booleanRelations(final /* Model */Object model) {
-    throw new Error("Unresolved compilation problems:"
-      + "\nDecomposition cannot be resolved to a type."
-      + "\nDecomposition cannot be resolved to a type."
-      + "\nDecomposition cannot be resolved to a type."
-      + "\nGroup cannot be resolved to a type."
-      + "\nGroup cannot be resolved to a type."
-      + "\nGroup cannot be resolved to a type."
-      + "\nGroup cannot be resolved to a type."
-      + "\nGroup cannot be resolved to a type."
-      + "\nrelations cannot be resolved"
-      + "\nexp cannot be resolved"
-      + "\nexp cannot be resolved"
-      + "\nmin cannot be resolved"
-      + "\nexp cannot be resolved"
-      + "\nmax cannot be resolved"
-      + "\n== cannot be resolved"
-      + "\n&& cannot be resolved"
-      + "\n== cannot be resolved"
-      + "\n! cannot be resolved"
-      + "\n&& cannot be resolved"
-      + "\n== cannot be resolved"
-      + "\n&& cannot be resolved"
-      + "\n== cannot be resolved"
-      + "\n! cannot be resolved"
-      + "\nexp cannot be resolved"
-      + "\nexp cannot be resolved"
-      + "\nmin cannot be resolved"
-      + "\nexp cannot be resolved"
-      + "\ngetChildren cannot be resolved"
-      + "\nvalues cannot be resolved"
-      + "\nsize cannot be resolved"
-      + "\nexp cannot be resolved"
-      + "\nmax cannot be resolved"
-      + "\nvalue cannot be resolved"
-      + "\n== cannot be resolved"
-      + "\nexp cannot be resolved"
-      + "\nmax cannot be resolved"
-      + "\nvalue cannot be resolved"
-      + "\n== cannot be resolved"
-      + "\n&& cannot be resolved"
-      + "\n! cannot be resolved"
-      + "\n&& cannot be resolved"
-      + "\n== cannot be resolved"
-      + "\n&& cannot be resolved"
-      + "\n! cannot be resolved");
+  public boolean booleanRelations(final Model model) {
+    boolean allBoolean = true;
+    EList<RelDeclaration> _relations = model.getRelations();
+    for (final RelDeclaration rel : _relations) {
+      Relation _exp = rel.getExp();
+      if ((_exp instanceof Decomposition)) {
+        Relation _exp_1 = rel.getExp();
+        final int min = ((Decomposition) _exp_1).getMin();
+        Relation _exp_2 = rel.getExp();
+        final int max = ((Decomposition) _exp_2).getMax();
+        if (((!((min == 1) && (max == 1))) && 
+          (!((min == 0) && (max == 1))))) {
+          this.instantiable = true;
+          return false;
+        }
+      } else {
+        Relation _exp_3 = rel.getExp();
+        if ((_exp_3 instanceof Group)) {
+          Relation _exp_4 = rel.getExp();
+          final int min_1 = ((Group) _exp_4).getMin();
+          Relation _exp_5 = rel.getExp();
+          final int numChildren = ((Group) _exp_5).getChildren().getValues().size();
+          int max_1 = 0;
+          Relation _exp_6 = rel.getExp();
+          String _value = ((Group) _exp_6).getMax().getValue();
+          boolean _equals = Objects.equal(_value, "*");
+          if (_equals) {
+            max_1 = numChildren;
+          } else {
+            Relation _exp_7 = rel.getExp();
+            max_1 = Integer.parseInt(
+              ((Group) _exp_7).getMax().getValue());
+          }
+          if (((!((min_1 == 1) && (max_1 == 1))) && 
+            (!((min_1 == 1) && (max_1 == numChildren))))) {
+            return false;
+          }
+        }
+      }
+    }
+    return allBoolean;
   }
   
   public boolean existInstantiable() {

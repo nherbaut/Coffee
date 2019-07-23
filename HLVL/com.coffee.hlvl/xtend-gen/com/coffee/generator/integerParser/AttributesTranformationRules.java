@@ -2,73 +2,80 @@ package com.coffee.generator.integerParser;
 
 import com.coffee.generator.TransformationRules;
 import com.coffee.generator.integerParser.IAttributesRules;
+import com.coffee.hlvl.Common;
+import com.coffee.hlvl.Decomposition;
+import com.coffee.hlvl.ElmDeclaration;
+import com.coffee.hlvl.Group;
+import com.coffee.hlvl.Relational;
+import com.coffee.hlvl.VarList;
+import com.coffee.hlvl.Visibility;
 import java.util.List;
 import java.util.Map;
 
 @SuppressWarnings("all")
 public class AttributesTranformationRules extends TransformationRules implements IAttributesRules {
   @Override
-  public String getConstant(final /* ElmDeclaration */Object element) {
+  public CharSequence getConstant(final ElmDeclaration element) {
     return "n.y.i";
   }
   
   @Override
-  public String getCore(final /* Common */Object core) {
+  public CharSequence getCore(final Common core) {
     return "n.y.i";
   }
   
   @Override
-  public String getCoreSingle(final /* ElmDeclaration */Object element) {
+  public CharSequence getCoreSingle(final ElmDeclaration element) {
     return "n.y.i";
   }
   
   @Override
-  public String getDecomposition(final /* Decomposition */Object rel, final /* Map<String, ElmDeclaration> */Object parents) {
+  public CharSequence getDecomposition(final Decomposition rel, final Map<String, ElmDeclaration> parents) {
     return "n.y.i";
   }
   
   @Override
-  public String getElement(final /* ElmDeclaration */Object element) {
+  public CharSequence getElement(final ElmDeclaration element) {
     return "n.y.i";
   }
   
   @Override
-  public String getExpression(final /* Relational */Object rel) {
+  public CharSequence getExpression(final Relational rel) {
     return "n.y.i";
   }
   
   @Override
-  public String getGroup(final /* Group */Object rel, final /* Map<String, ElmDeclaration> */Object parents) {
+  public CharSequence getGroup(final Group rel, final Map<String, ElmDeclaration> parents) {
     return "n.y.i";
   }
   
   @Override
-  public String getImpliesList(final /* VarList */Object rel) {
+  public CharSequence getImpliesList(final VarList rel) {
     return "n.y.i";
   }
   
   @Override
-  public String getImpliesPair(final /* ElmDeclaration */Object left, final /* ElmDeclaration */Object right) {
+  public CharSequence getImpliesPair(final ElmDeclaration left, final ElmDeclaration right) {
     return "n.y.i";
   }
   
   @Override
-  public String getMutexList(final /* VarList */Object rel) {
+  public CharSequence getMutexList(final VarList rel) {
     return "n.y.i";
   }
   
   @Override
-  public String getMutexPair(final /* ElmDeclaration */Object left, final /* ElmDeclaration */Object right) {
+  public CharSequence getMutexPair(final ElmDeclaration left, final ElmDeclaration right) {
     return "n.y.i";
   }
   
   @Override
-  public String getVisibility(final /* Visibility */Object rel, final List<CharSequence> relations) {
+  public CharSequence getVisibility(final Visibility rel, final List<CharSequence> relations) {
     return "n.y.i";
   }
   
   @Override
-  public String getDecompositionAtt(final /* ElmDeclaration */Object parent, final /* ElmDeclaration */Object attribute) {
+  public CharSequence getDecompositionAtt(final ElmDeclaration parent, final ElmDeclaration attribute) {
     return "n.y.i";
   }
 }

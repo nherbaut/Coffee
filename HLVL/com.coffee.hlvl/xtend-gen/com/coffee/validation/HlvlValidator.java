@@ -3,11 +3,13 @@
  */
 package com.coffee.validation;
 
+import com.coffee.validation.AbstractHlvlValidator;
+
 /**
  * This class contains custom validation rules.
  * 
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#validation
  */
 @SuppressWarnings("all")
-public class HlvlValidator /* implements AbstractHlvlValidator  */{
+public class HlvlValidator extends AbstractHlvlValidator {
 }

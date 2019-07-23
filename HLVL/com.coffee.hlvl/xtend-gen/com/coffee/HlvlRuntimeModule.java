@@ -3,9 +3,11 @@
  */
 package com.coffee;
 
+import com.coffee.AbstractHlvlRuntimeModule;
+
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
 @SuppressWarnings("all")
-public class HlvlRuntimeModule /* implements AbstractHlvlRuntimeModule  */{
+public class HlvlRuntimeModule extends AbstractHlvlRuntimeModule {
 }

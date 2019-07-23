@@ -3,6 +3,13 @@ package com.coffee.generator.expressionsParser;
 import com.coffee.generator.commons.IMiniZincConstants;
 import com.coffee.generator.expressionsParser.IBooleanExpressionsRules;
 import com.coffee.generator.expressionsParser.IExpressionsParser;
+import com.coffee.hlvl.And;
+import com.coffee.hlvl.Iff;
+import com.coffee.hlvl.Implies;
+import com.coffee.hlvl.Negation;
+import com.coffee.hlvl.Or;
+import com.coffee.hlvl.VariableRef;
+import org.eclipse.xtend2.lib.StringConcatenation;
 
 /**
  * Implementation of boolean rules
@@ -19,52 +26,78 @@ public class BooleanExpressionsRules implements IBooleanExpressionsRules, IMiniZ
   }
   
   @Override
-  public CharSequence getAnd(final /* And */Object exp) {
-    throw new Error("Unresolved compilation problems:"
-      + "\nThe method parse(Object) is undefined for the type IExpressionsParser"
-      + "\nThe method parse(Object) is undefined for the type IExpressionsParser"
-      + "\nleft cannot be resolved"
-      + "\nright cannot be resolved");
+  public CharSequence getAnd(final And exp) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("(");
+    CharSequence _parse = this.parser.parse(exp.getLeft());
+    _builder.append(_parse);
+    _builder.append(" ");
+    _builder.append(IMiniZincConstants.AND);
+    _builder.append(" ");
+    CharSequence _parse_1 = this.parser.parse(exp.getRight());
+    _builder.append(_parse_1);
+    _builder.append(")");
+    return _builder;
   }
   
   @Override
-  public CharSequence getIff(final /* Iff */Object exp) {
-    throw new Error("Unresolved compilation problems:"
-      + "\nThe method parse(Object) is undefined for the type IExpressionsParser"
-      + "\nThe method parse(Object) is undefined for the type IExpressionsParser"
-      + "\nleft cannot be resolved"
-      + "\nright cannot be resolved");
+  public CharSequence getIff(final Iff exp) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("(");
+    CharSequence _parse = this.parser.parse(exp.getLeft());
+    _builder.append(_parse);
+    _builder.append("  ");
+    _builder.append(IMiniZincConstants.IFF);
+    _builder.append(" ");
+    CharSequence _parse_1 = this.parser.parse(exp.getRight());
+    _builder.append(_parse_1);
+    _builder.append(")");
+    return _builder;
   }
   
   @Override
-  public CharSequence getImplies(final /* Implies */Object exp) {
-    throw new Error("Unresolved compilation problems:"
-      + "\nThe method parse(Object) is undefined for the type IExpressionsParser"
-      + "\nThe method parse(Object) is undefined for the type IExpressionsParser"
-      + "\nleft cannot be resolved"
-      + "\nright cannot be resolved");
+  public CharSequence getImplies(final Implies exp) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("(");
+    CharSequence _parse = this.parser.parse(exp.getLeft());
+    _builder.append(_parse);
+    _builder.append("  ");
+    _builder.append(IMiniZincConstants.IMPLIES_LR);
+    _builder.append(" ");
+    CharSequence _parse_1 = this.parser.parse(exp.getRight());
+    _builder.append(_parse_1);
+    _builder.append(")");
+    return _builder;
   }
   
   @Override
-  public CharSequence getNegation(final /* Negation */Object exp) {
-    throw new Error("Unresolved compilation problems:"
-      + "\nThe method parse(Object) is undefined for the type IExpressionsParser"
-      + "\nexpression cannot be resolved");
+  public CharSequence getNegation(final Negation exp) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append(IMiniZincConstants.NOT);
+    _builder.append("(");
+    CharSequence _parse = this.parser.parse(exp.getExpression());
+    _builder.append(_parse);
+    _builder.append(")");
+    return _builder;
   }
   
   @Override
-  public CharSequence getOr(final /* Or */Object exp) {
-    throw new Error("Unresolved compilation problems:"
-      + "\nThe method parse(Object) is undefined for the type IExpressionsParser"
-      + "\nThe method parse(Object) is undefined for the type IExpressionsParser"
-      + "\nleft cannot be resolved"
-      + "\nright cannot be resolved");
+  public CharSequence getOr(final Or exp) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("(");
+    CharSequence _parse = this.parser.parse(exp.getLeft());
+    _builder.append(_parse);
+    _builder.append(" ");
+    _builder.append(IMiniZincConstants.OR);
+    _builder.append(" ");
+    CharSequence _parse_1 = this.parser.parse(exp.getRight());
+    _builder.append(_parse_1);
+    _builder.append(")");
+    return _builder;
   }
   
   @Override
-  public Object getVariable(final /* VariableRef */Object exp) {
-    throw new Error("Unresolved compilation problems:"
-      + "\nvariable cannot be resolved"
-      + "\nname cannot be resolved");
+  public CharSequence getVariable(final VariableRef exp) {
+    return exp.getVariable().getName();
   }
 }

@@ -4,6 +4,14 @@ import com.coffee.generator.Dialect;
 import com.coffee.generator.expressionsParser.BooleanExpressionsRules;
 import com.coffee.generator.expressionsParser.IBooleanExpressionsRules;
 import com.coffee.generator.expressionsParser.IExpressionsParser;
+import com.coffee.hlvl.And;
+import com.coffee.hlvl.BoolConstant;
+import com.coffee.hlvl.Iff;
+import com.coffee.hlvl.Implies;
+import com.coffee.hlvl.Negation;
+import com.coffee.hlvl.Or;
+import com.coffee.hlvl.Relational;
+import com.coffee.hlvl.VariableRef;
 
 /**
  * Parser for boolean expressions
@@ -31,27 +39,49 @@ public class BooleanExpressionsParser implements IExpressionsParser {
   }
   
   @Override
-  public Object parse(final /* Relational */Object exp) {
-    throw new Error("Unresolved compilation problems:"
-      + "\nBoolConstant cannot be resolved to a type."
-      + "\nVariableRef cannot be resolved to a type."
-      + "\nNegation cannot be resolved to a type."
-      + "\nIff cannot be resolved to a type."
-      + "\nImplies cannot be resolved to a type."
-      + "\nOr cannot be resolved to a type."
-      + "\nAnd cannot be resolved to a type."
-      + "\nThe method getVariable(Relational) is undefined for the type IBooleanExpressionsRules"
-      + "\nThe method getNegation(Relational) is undefined for the type IBooleanExpressionsRules"
-      + "\nThe method getIff(Relational) is undefined for the type IBooleanExpressionsRules"
-      + "\nThe method getImplies(Relational) is undefined for the type IBooleanExpressionsRules"
-      + "\nThe method getOr(Relational) is undefined for the type IBooleanExpressionsRules"
-      + "\nThe method getAnd(Relational) is undefined for the type IBooleanExpressionsRules"
-      + "\nUnreachable code: The case can never match. It is already handled by a previous condition."
-      + "\nUnreachable code: The case can never match. It is already handled by a previous condition."
-      + "\nUnreachable code: The case can never match. It is already handled by a previous condition."
-      + "\nUnreachable code: The case can never match. It is already handled by a previous condition."
-      + "\nUnreachable code: The case can never match. It is already handled by a previous condition."
-      + "\nUnreachable code: The case can never match. It is already handled by a previous condition."
-      + "\nvalue cannot be resolved");
+  public CharSequence parse(final Relational exp) {
+    CharSequence _switchResult = null;
+    boolean _matched = false;
+    if (exp instanceof BoolConstant) {
+      _matched=true;
+      _switchResult = ((BoolConstant)exp).getValue();
+    }
+    if (!_matched) {
+      if (exp instanceof VariableRef) {
+        _matched=true;
+        _switchResult = this.rules.getVariable(((VariableRef)exp));
+      }
+    }
+    if (!_matched) {
+      if (exp instanceof Negation) {
+        _matched=true;
+        _switchResult = this.rules.getNegation(((Negation)exp));
+      }
+    }
+    if (!_matched) {
+      if (exp instanceof Iff) {
+        _matched=true;
+        _switchResult = this.rules.getIff(((Iff)exp));
+      }
+    }
+    if (!_matched) {
+      if (exp instanceof Implies) {
+        _matched=true;
+        _switchResult = this.rules.getImplies(((Implies)exp));
+      }
+    }
+    if (!_matched) {
+      if (exp instanceof Or) {
+        _matched=true;
+        _switchResult = this.rules.getOr(((Or)exp));
+      }
+    }
+    if (!_matched) {
+      if (exp instanceof And) {
+        _matched=true;
+        _switchResult = this.rules.getAnd(((And)exp));
+      }
+    }
+    return _switchResult;
   }
 }

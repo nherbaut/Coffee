@@ -15,7 +15,7 @@ public class ParserFactory {
 	 static public IHLVLParser getParser(Dialect dialect, String modelName ) {
 		IHLVLParser generator=null;
 		switch(dialect) {
-		case BASIC:
+		case BASIC_BOOL:
 			generator= new BoolParser(modelName, dialect);
 			break;
 			

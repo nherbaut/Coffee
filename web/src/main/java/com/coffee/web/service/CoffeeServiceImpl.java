@@ -11,6 +11,9 @@ import java.util.Optional;
 import javax.inject.Inject;
 import javax.ws.rs.ext.Provider;
 
+import com.coffee.generator.Dialect;
+import com.coffee.generator.IHLVLParser;
+import com.coffee.generator.ParserFactory;
 import com.coffee.hlvl.Model;
 import com.coffee.web.entity.Configuration;
 import com.google.common.collect.Lists;
@@ -47,13 +50,30 @@ public class CoffeeServiceImpl implements CoffeeService {
 	public CoffeeServiceImpl(ConfigurationRepository repo) {
 		this.repo = repo;
 	}
+	public CoffeeServiceImpl() {
+	}
 
 	ConfigurationRepository repo;
+	
 
 	@Override
-	public boolean isModelSatisfiable(Model m, String solverId) {
-
-		return true;
+	/**
+	 * this method is responsible for searh if the model has a solution
+	 * 
+	 * @param m: model that contain 
+	 * @param solverId: solver's id
+	 * @param dialect: problem type to solving
+	 * @return boolean that represent if the model is satisfiable
+	 */
+	public boolean isModelSatisfiable(Model m, String solverId, Dialect dialect) {
+		try {
+			IHLVLParser parser= ParserFactory.getParser(dialect, m.getName());
+			CharSequence actual= parser.parseModel(m);
+			System.out.println(actual);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	@Override

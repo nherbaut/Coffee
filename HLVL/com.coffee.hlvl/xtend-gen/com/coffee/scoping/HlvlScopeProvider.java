@@ -3,6 +3,8 @@
  */
 package com.coffee.scoping;
 
+import com.coffee.scoping.AbstractHlvlScopeProvider;
+
 /**
  * This class contains custom scoping description.
  * 
@@ -10,5 +12,5 @@ package com.coffee.scoping;
  * on how and when to use it.
  */
 @SuppressWarnings("all")
-public class HlvlScopeProvider /* implements AbstractHlvlScopeProvider  */{
+public class HlvlScopeProvider extends AbstractHlvlScopeProvider {
 }

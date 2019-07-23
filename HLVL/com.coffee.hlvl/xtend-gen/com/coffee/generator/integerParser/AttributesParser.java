@@ -7,7 +7,7 @@ import com.coffee.generator.integerParser.AttributesTranformationRules;
 @SuppressWarnings("all")
 public class AttributesParser extends AbstractHLVLParser {
   public AttributesParser(final String name) {
-    super(name, Dialect.BASIC);
+    super(name, Dialect.BASIC_INT);
     AttributesTranformationRules _attributesTranformationRules = new AttributesTranformationRules();
     this.setTransformationRules(_attributesTranformationRules);
   }
