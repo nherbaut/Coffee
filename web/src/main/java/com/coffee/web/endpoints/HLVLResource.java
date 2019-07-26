@@ -55,7 +55,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 @Path("models")
-public class HvlvResources {
+public class HLVLResource {
 
 	// @Inject
 	private ConfigurationRepository repo = new ConfigurationRepositoryImpl();
