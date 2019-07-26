@@ -8,8 +8,9 @@ package com.coffee.generator;
  * - Inst, for cardinality-based 
 */
 public enum Dialect {
-	BOOL,
-	ATT,
-	INST
+	BASIC_BOOL,
+	BASIC_INT,
+	ATTRIBUTE,
+	MULTIPLICITY
 
 }
