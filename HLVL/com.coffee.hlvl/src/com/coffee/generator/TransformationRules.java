@@ -3,14 +3,12 @@ package com.coffee.generator;
 
 import java.util.Map;
 
-import java.util.List;
 import com.coffee.hlvl.ElmDeclaration;
 import com.coffee.hlvl.Common;
 import com.coffee.hlvl.Decomposition;
 import com.coffee.hlvl.Group;
 import com.coffee.hlvl.VarList;
 import com.coffee.hlvl.Relational;
-import com.coffee.hlvl.Visibility;
 
 /**
  * Abstract class to define the methods a class implementing the transformation rules
@@ -29,16 +27,38 @@ public abstract class TransformationRules {
 	public  abstract CharSequence getElement(ElmDeclaration element);
 	
 	
-	public abstract CharSequence getCore(Common core);
+	
+	
+	public CharSequence getCore(Common core) {
+		StringBuilder out= new StringBuilder();
+		for(ElmDeclaration element: core.getElements().getValues()){
+			out.append(getCoreSingle(element));	
+		}
+		return out.toString();
+	}
+	
+	public CharSequence getImpliesList(VarList rel) {
+		StringBuilder out= new StringBuilder();
+		for( ElmDeclaration element: rel.getList().getValues()){
+			out.append(getImpliesPair(rel.getVar1(), element));
+		}
+		return out.toString();
+	}
+	
+	public CharSequence getMutexList(VarList rel) {
+		StringBuilder out= new StringBuilder();
+		for(ElmDeclaration element: rel.getList().getValues()){
+			out.append(getMutexPair(rel.getVar1(), element));
+		}	
+		return out.toString();
+	}
 	public abstract CharSequence getCoreSingle(ElmDeclaration element);
 	public abstract CharSequence getDecomposition(Decomposition rel, Map<String,ElmDeclaration> parents);
 	public abstract CharSequence getGroup(Group rel, Map<String,ElmDeclaration> parents);
 	public abstract CharSequence getImpliesPair(ElmDeclaration left, ElmDeclaration right);
 	public abstract CharSequence getMutexPair(ElmDeclaration left, ElmDeclaration right);
-	public abstract CharSequence getImpliesList(VarList rel);
-	public abstract CharSequence getMutexList(VarList rel);
 	public abstract CharSequence getExpression(Relational rel);
-	public abstract CharSequence getVisibility(Visibility rel, List<CharSequence> relations);
+	//public abstract CharSequence getVisibility(Visibility rel, List<CharSequence> relations);
 	
 
 	
