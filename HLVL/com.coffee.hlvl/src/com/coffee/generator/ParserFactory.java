@@ -1,7 +1,10 @@
 package com.coffee.generator;
 
-import com.coffee.generator.boolParser.BoolParser;
+import com.coffee.generator.boolParser.BasicBoolParser;
+import com.coffee.generator.boolParser.ComplexBoolParser;
 import com.coffee.generator.integerParser.AttributesParser;
+import com.coffee.generator.integerParser.BasicIntegerParser;
+import com.coffee.generator.integerParser.ComplexIntegerParser;
 
 /**
  * Simple factory for creating concrete instances of code generators
@@ -16,11 +19,19 @@ public class ParserFactory {
 		IHLVLParser generator=null;
 		switch(dialect) {
 		case BASIC_BOOL:
-			generator= new BoolParser(modelName, dialect);
+			generator= new BasicBoolParser(modelName, dialect);
 			break;
-			
+		case BASIC_INT:
+			generator= new BasicIntegerParser(modelName, dialect);
+			break;
+		case COMPLEX_BOOL:
+			generator= new ComplexBoolParser(modelName, dialect);
+			break;
+		case COMPLEX_INT:
+			generator= new ComplexIntegerParser(modelName, dialect);
+			break;
 		default:
-			generator= new AttributesParser(modelName);	
+			generator= new AttributesParser(modelName, dialect);	
 		}
 		return generator;
 	}

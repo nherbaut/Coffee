@@ -3,7 +3,6 @@
  */
 package com.coffee.generator
 
-
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
@@ -12,6 +11,7 @@ import com.coffee.hlvl.Model
 
 import com.coffee.hlvl.Group
 import com.coffee.hlvl.Decomposition
+import com.coffee.hlvl.ElmDeclaration
 
 //import java.util.Properties
 
@@ -122,7 +122,7 @@ class HlvlGenerator extends AbstractGenerator {
 	 */
 	def allElementsBoolean(Model model){
 		var isBoolean= true
-		for (element: model.elements ){
+		for ( element : model.elements ){
 			attributes = (element.att=== null)
 			if (element.dataType=="integer" || element.dataType=="symbolic" || element.att!== null){
 				isBoolean= false

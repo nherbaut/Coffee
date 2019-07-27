@@ -1,20 +1,16 @@
 package com.coffee.generator.boolParser
 
 import com.coffee.hlvl.ElmDeclaration
-import com.coffee.hlvl.Common
 import com.coffee.hlvl.Decomposition
 import java.util.Map
 import com.coffee.hlvl.Relational
 import com.coffee.hlvl.Group
-import com.coffee.hlvl.VarList
-import com.coffee.hlvl.Visibility
-import java.util.List
 import com.coffee.hlvl.ConstantDecl
-import com.coffee.hlvl.BoolVal
 import com.coffee.generator.commons.IMiniZincConstants
 import com.coffee.generator.TransformationRules
 import com.coffee.generator.expressionsParser.BooleanExpressionsParser
 import com.coffee.generator.Dialect
+import com.coffee.hlvl.BoolConstant
 
 /**
  * class implementing the boolean transformation rules for in Benavides2010
@@ -28,7 +24,7 @@ import com.coffee.generator.Dialect
  * fixed a bug in the group with cardinality [1,1]
  */
 
-class BooleanRules extends TransformationRules implements IMiniZincConstants
+class BasicBooleanRules extends TransformationRules implements IMiniZincConstants
  {
 	/**
 	 * integer variable to produce the identifiers for the variables and constraints
@@ -36,36 +32,42 @@ class BooleanRules extends TransformationRules implements IMiniZincConstants
 	 */
 	private int visibilityIdCounter;
 	
+	private DIMACSRules dimacs;
+	
 	private BooleanExpressionsParser expressionsParser;
+	private StringBuilder cnfBuilder;
 	
 	new(Dialect dialect){	
 		expressionsParser= new BooleanExpressionsParser();
 		expressionsParser.dialect = dialect
 		visibilityIdCounter=0;
+		cnfBuilder= new StringBuilder();
+		dimacs = new DIMACSRules();
 	}
 	
+	def String getCNF(){
+		return cnfBuilder.toString();
+	}
 	override getConstant(ElmDeclaration element) {
 		val value= (element.declaration as ConstantDecl).value
-		'''«BOOL_DOMAIN» «COLON» «element.name» «ASSIGN» «(value as BoolVal).value»  «SEMICOLON»
+		cnfBuilder.append(dimacs.getElement(element))
+		'''«BOOL_DOMAIN» «COLON» «element.name» «ASSIGN» «(value as BoolConstant).value»  «SEMICOLON»
 		'''
 	}
 	
 	override getElement(ElmDeclaration element) {
 		//var String out=""
 		//val declaration= element.declaration as VariableDecl
+		cnfBuilder.append(dimacs.getElement(element))
 		'''«VAR_DEF» «BOOL_DOMAIN» «COLON» «element.name» «SEMICOLON»
 		'''
+		
 	}
 	
-	override getCore(Common core) {
-		var  String out=""
-		for(element: core.elements.values){
-			out+= getCoreSingle(element)	
-		}
-		out
-	}
+
 	
 	override getCoreSingle(ElmDeclaration element){
+		cnfBuilder.append(dimacs.getCoreSingle(element))
 		'''«CONS_DEF» «element.name» «EQUIV» «TRUE_ATOM» «SEMICOLON»
 		'''
 	}
@@ -78,10 +80,12 @@ class BooleanRules extends TransformationRules implements IMiniZincConstants
 			if(rel.min==1 && rel.max==1){
 				out+= '''«CONS_DEF» «rel.parent.name» «IFF» «element.name» «SEMICOLON»
 				'''
+				cnfBuilder.append(dimacs.getMandatory(rel.parent.name, element.name));
 			}
 			else{
 				out+= '''«CONS_DEF» «element.name» «IMPLIES_LR» «rel.parent.name» «SEMICOLON»
 				'''
+				cnfBuilder.append(dimacs.getOptional(rel.parent.name, element.name));
 			}
 		}
 		out
@@ -92,17 +96,17 @@ class BooleanRules extends TransformationRules implements IMiniZincConstants
 	 */
 	override getGroup(Group rel, Map<String, ElmDeclaration> parents) {
 		// groups [1, 1] alternative
-		if(rel.min==1 && rel.max.value=="1"){
-				getXor(rel, parents)		
-		}
-		//TODO include the [n, m] rule from literature
+		if (rel.min == 1 && rel.max.value == "1") {
+			cnfBuilder.append(dimacs.getXor(rel))
+			getXor(rel, parents)
+		} // TODO include the [n, m] rule from literature
 		// groups [1, *] OR groups
-		else{
+		else {
+			cnfBuilder.append(dimacs.getOR(rel))
 			getOR(rel, parents)
 		}
-
-		
 	}
+	
 	def getXor(Group rel, Map<String, ElmDeclaration> parents){
 		var out=""
 		for(element: rel.children.values){
@@ -118,6 +122,7 @@ class BooleanRules extends TransformationRules implements IMiniZincConstants
 		}
 		out
 	}
+	
 	def getOR(Group rel, Map<String, ElmDeclaration> parents){
 		var out='''«CONS_DEF» «rel.parent.name» «IFF» «OPEN_CALL»'''
 		for(element: rel.children.values){
@@ -130,49 +135,42 @@ class BooleanRules extends TransformationRules implements IMiniZincConstants
 	}
 	
 	override getImpliesPair(ElmDeclaration left, ElmDeclaration right) {
+		cnfBuilder.append(dimacs.getImpliesPair(left, right));
 		'''«CONS_DEF» «left.name» «IMPLIES_LR» «right.name» «SEMICOLON»
 		'''
 	}
 	
 	override getMutexPair(ElmDeclaration left, ElmDeclaration right) {
+		cnfBuilder.append(dimacs.getMutexPair(left, right));
 		'''«CONS_DEF» «NOT» «OPEN_CALL»«left.name» «AND» «right.name»«CLOSE_CALL»«SEMICOLON»
 		'''
 	}
 	
-	override getImpliesList(VarList rel) {
-		var out=""
-		for(element: rel.list.values){
-			out+= getImpliesPair(rel.var1, element)
-		}
-		out
-	}
 	
-	override getMutexList(VarList rel) {
-		var out=""
-		for(element: rel.list.values){
-			out+= getMutexPair(rel.var1, element)
-		}	
-		out
-	}
-	
+	//FIXME fix the 
 	override getExpression(Relational exp) {
-		'''«CONS_DEF» «expressionsParser.parse(exp)» «SEMICOLON»
+		'''«CONS_DEF» «expressionsParser.parse(exp)»«SEMICOLON»
 		'''
 	}
 	
-	override getVisibility(Visibility rel, List<CharSequence> relations) {
-		var out= 
-		'''
-			var bool: B«visibilityIdCounter» ;
-			constraint «expressionsParser.parse(rel.condition)» -> B«visibilityIdCounter»;
-		'''
-			for (r: relations){
-				out+= 
-				'''constraint B«visibilityIdCounter»  <-> «r.subSequence(10, r.length)»
-			'''
-			}
-			visibilityIdCounter++
-			out
-	}
+
+	
+	/*===================================================================
+	 *===================================================================
+	 * Methods for DIMACS notation
+	 * */
+	 
+	 def getHeader(){
+	 	return dimacs.getHeader();
+	 }
+	 
+	 def getNumClauses(){
+	 	return dimacs.getNumClauses();
+	 }
+	 
+	 def getNumVars(){
+	 	return dimacs.getNumVars();
+	 }
+	
 	
 }
